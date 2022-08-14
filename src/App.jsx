@@ -1,5 +1,12 @@
+import Table from './components'
+
 function App() {
-  return <div>Testi</div>
+  return (
+    <div>
+      <h1>Testi</h1>
+      <Table />
+    </div>
+  )
 }
 
 export default App
