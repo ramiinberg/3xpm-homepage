@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Box } from '@mui/material'
+import FishTableHead from './FishTableHead'
 
 function createData(username, fishLength, fishMultiple, fishResult, points) {
   return { username, fishLength, fishMultiple, fishResult, points }
@@ -21,6 +22,14 @@ const rows = [
 
 export default function FishTable() {
   const [dense, setDense] = useState(false)
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('fishLength')
+
+  const handleRequestSort = property => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   const handleChangeDense = event => {
     setDense(event.target.checked)
@@ -30,8 +39,18 @@ export default function FishTable() {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
-          <Table aria-labelledby='tableTitle' size={dense ? 'small' : 'medium'}>
+          <Table
+            aria-labelledby='tableTitle'
+            size={dense ? 'small' : 'medium'}
+            sx={{ minWidth: 750 }}
+          >
             <h1>test</h1>
+            <FishTableHead
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
           </Table>
         </TableContainer>
       </Paper>
