@@ -8,8 +8,8 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Box } from '@mui/material'
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein }
+function createData(username, fishLength, fishMultiple, fishResult, points) {
+  return { username, fishLength, fishMultiple, fishResult, points }
 }
 
 const rows = [
