@@ -1,6 +1,5 @@
 import {
   Box,
-  Checkbox,
   TableCell,
   TableRow,
   TableSortLabel,
@@ -8,15 +7,7 @@ import {
 } from '@mui/material'
 
 function FishTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-    visuallyHidden
-  } = props
+  const { order, orderBy, onRequestSort, visuallyHidden } = props
   const createSortHandler = property => event => {
     onRequestSort(event, property)
   }
