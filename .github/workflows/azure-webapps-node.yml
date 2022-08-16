@@ -17,73 +17,112 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
+# on:
+#   push:
+#     branches:
+#       - 'main'
+#   workflow_dispatch:
+
+# env:
+#   AZURE_WEBAPP_NAME: 3xpm # set this to your application's name
+#   AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
+#   NODE_VERSION: '14.x' # set this to the node version to use
+
+# permissions:
+#   contents: read
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ env.NODE_VERSION }}
+#           cache: 'npm'
+
+#       - name: npm install, build, and test
+#         run: |
+#           npm install
+#           npm run build
+#           npm run test --if-present
+
+#       - name: Zip artifact for deployment
+#         run: zip release.zip ./* -r
+
+#       - name: Upload artifact for deployment job
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: node-app
+#           path: release.zip
+
+#   deploy:
+#     permissions:
+#       contents: none
+#     runs-on: ubuntu-latest
+#     needs: build
+#     environment:
+#       name: 'Development'
+#       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+#     steps:
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: node-app
+
+#       - name: unzip artifact for deployment
+#         run: unzip release.zip
+
+#       - name: add process.json
+#         run: |
+#           echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
+
+#       - name: 'Deploy to Azure WebApp'
+#         id: deploy-to-webapp
+#         uses: azure/webapps-deploy@v2
+#         with:
+#           app-name: ${{ env.AZURE_WEBAPP_NAME }}
+#           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+#           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
 on:
   push:
     branches:
-      - 'main'
-  workflow_dispatch:
+    - master
 
 env:
-  AZURE_WEBAPP_NAME: 3xpm # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '10.x' # set this to the node version to use
-
-permissions:
-  contents: read
+  AZURE_WEBAPP_NAME: 3xpm # set this to your application’s name
+  AZURE_WEBAPP_PACKAGE_PATH: ‘build’ # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: ‘14.x’ # set this to the node version to use
 
 jobs:
-  build:
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+    environment: production
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build
-          npm run test --if-present
-
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: node-app
-          path: release.zip
-
-  deploy:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: node-app
-
-      - name: unzip artifact for deployment
-        run: unzip release.zip
-
-      - name: add process.json
-        run: |
-          echo '{ script: "serve", env: { PM2_SERVE_SPA: "true", PM2_SERVE_HOMEPAGE: "/index.html" } }' >> build/process.json
-
-      - name: 'Deploy to Azure WebApp'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+steps:
+  - uses: actions/checkout@v2
+  - name: Use Node.js ${{ env.NODE_VERSION }}
+    uses: actions/setup-node@v2
+    with:
+      node-version: ${{ env.NODE_VERSION }}
+  - name: npm install, build, and test
+    run: |
+# Build and test the project, then
+# deploy to Azure Web App.
+      npm install
+      npm run build — if-present
+      npm run test — if-present
+  - name: add process.json
+    run: |
+      echo ‘{ script: “serve”, env: { PM2_SERVE_SPA: “true”, PM2_SERVE_HOMEPAGE: “/index.html” } }’ >> build/process.json
+  - name: ‘Deploy to Azure WebApp’
+    uses: azure/webapps-deploy@v2
+    with:
+      app-name: ${{ env.AZURE_WEBAPP_NAME }}
+      publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
