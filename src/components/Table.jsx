@@ -1,10 +1,6 @@
 import { useState } from 'react'
 import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import { Box } from '@mui/material'
 import FishTableHead from './FishTableHead'
@@ -21,7 +17,6 @@ const rows = [
 ]
 
 export default function FishTable() {
-  const [dense, setDense] = useState(false)
   const [order, setOrder] = useState('asc')
   const [orderBy, setOrderBy] = useState('fishLength')
 
@@ -31,19 +26,11 @@ export default function FishTable() {
     setOrderBy(property)
   }
 
-  const handleChangeDense = event => {
-    setDense(event.target.checked)
-  }
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
-          <Table
-            aria-labelledby='tableTitle'
-            size={dense ? 'small' : 'medium'}
-            sx={{ minWidth: 750 }}
-          >
+          <Table aria-labelledby='tableTitle' sx={{ minWidth: 750 }}>
             <h1>test</h1>
             <FishTableHead
               order={order}
