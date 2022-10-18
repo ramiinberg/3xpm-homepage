@@ -1,8 +1,4 @@
 import { useState } from 'react'
-import Table from '@mui/material/Table'
-import TableContainer from '@mui/material/TableContainer'
-import Paper from '@mui/material/Paper'
-import { Box } from '@mui/material'
 import FishTableHead from './FishTableHead'
 
 function createData(username, fishLength, fishMultiple, fishResult, points) {
@@ -26,21 +22,5 @@ export default function FishTable() {
     setOrderBy(property)
   }
 
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <TableContainer>
-          <Table aria-labelledby='tableTitle' sx={{ minWidth: 750 }}>
-            <h1>test</h1>
-            <FishTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Box>
-  )
+  return <div />
 }
