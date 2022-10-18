@@ -1,61 +1,47 @@
-import { useState } from 'react'
-
-function createData(username, fishLength, fishMultiple, fishResult, points) {
-  return { username, fishLength, fishMultiple, fishResult, points }
-}
-
-const rows = [
-  createData('Wurppe', 28, 1, 28, 25),
-  createData('Timo', 26, 1, 26, 18),
-  createData('Kimmo', 27, 0.75, 20.25, 12),
-  createData('Santeri', 26, 1, 26, 18)
-]
-
 function Table() {
   return (
-    <table>
+    <table className='table'>
       <thead>
         <tr>
-          <th aria-label='ID' />
+          <th aria-label='name' />
           <th>CM</th>
           <th>Kerroin</th>
           <th>Tulos</th>
           <th>Pisteet</th>
         </tr>
       </thead>
+      <tbody>
+        <tr>
+          <td>Wurppe</td>
+          <td>28</td>
+          <td>1</td>
+          <td>28</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>Timo</td>
+          <td>26</td>
+          <td>1</td>
+          <td>26</td>
+          <td>18</td>
+        </tr>
+        <tr>
+          <td>Kimmo</td>
+          <td>27</td>
+          <td>0.75</td>
+          <td>20.25</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>Santeri</td>
+          <td>26</td>
+          <td>1</td>
+          <td>26</td>
+          <td>18</td>
+        </tr>
+      </tbody>
     </table>
   )
 }
-
-// {
-//   id: 'username',
-//   numeric: false,
-//   disablePadding: true,
-//   label: ''
-// },
-// {
-//   id: 'fishLength',
-//   numeric: true,
-//   disablePadding: false,
-//   label: 'Suurin Ahven(cm)'
-// },
-// {
-//   id: 'fishMultiple',
-//   numeric: true,
-//   disablePadding: false,
-//   label: 'Kalastusväline(kerroin)'
-// },
-// {
-//   id: 'fishResult',
-//   numeric: true,
-//   disablePadding: false,
-//   label: 'Tulos'
-// },
-// {
-//   id: 'points',
-//   numeric: true,
-//   disablePadding: false,
-//   label: 'Pisteet'
-// }
 
 export default Table
