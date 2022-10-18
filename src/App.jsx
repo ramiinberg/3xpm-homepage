@@ -1,7 +1,11 @@
+import Navigation from './components/Navigation'
+
 function App() {
   return (
-    <div>
-      <h1>Testi</h1>
+    <div className='container'>
+      <Navigation />
+      <div className='header'>HEADER</div>
+      <div className='showcase'>SHOWCASE</div>
     </div>
   )
 }
