@@ -1,11 +1,13 @@
-import Navigation from './components/Navigation'
+import Sidebar from './components/Sidebar'
+import Header from './views/Header'
+import Showcase from './views/Showcase'
 
 function App() {
   return (
     <div className='container'>
-      <Navigation />
-      <div className='header'>HEADER</div>
-      <div className='showcase'>SHOWCASE</div>
+      <Sidebar />
+      <Header />
+      <Showcase />
     </div>
   )
 }

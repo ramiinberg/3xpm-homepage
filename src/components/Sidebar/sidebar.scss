@@ -1,0 +1,6 @@
+.sidebar {
+  background-color: var(--color-primary);
+
+  grid-row: 1 / -1;
+  grid-column: sidebar-start / sidebar-end;
+}
