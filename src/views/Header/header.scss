@@ -3,4 +3,95 @@
 
   grid-row: 1 / 2;
   grid-column: full-start / full-end;
+
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(83, 197, 225, 0.8),
+      rgba(23, 111, 132, 0.8)
+    ),
+    url('../../images/fish.jpg');
+
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+
+  &__text-box {
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.heading-primary {
+  color: #fff;
+
+  backface-visibility: hidden;
+  margin-bottom: 6rem;
+
+  &--main {
+    display: block;
+    font-size: 6rem;
+    font-weight: 400;
+    // letter-spacing: 1rem;
+
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    /*
+    animation-iteration-count: 3;
+    animation-delay: 3s;
+    */
+  }
+
+  &--sub {
+    text-transform: uppercase;
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.8rem;
+
+    animation: moveInRight 1s ease-out;
+  }
+
+  @media screen and (max-width: 600px) {
+    &--main {
+      font-size: 4rem;
+    }
+
+    &--sub {
+      letter-spacing: 0.5rem;
+    }
+  }
+}
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translate(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translate(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
