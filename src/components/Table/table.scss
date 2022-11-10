@@ -1,5 +1,7 @@
 .table {
   grid-column: center-start / center-end;
+  margin-bottom: 10rem;
+
   background-color: var(--color-grey-light-1);
   font-size: 2rem;
   display: grid;
