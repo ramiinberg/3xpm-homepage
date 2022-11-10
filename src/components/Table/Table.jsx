@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { getBodyRow, getBodyJSXRow } from './tableFunctions'
 
 function Table() {
   const sheetId = '1O7pngMQhWZpfwLNto6PHQuF3fKZ-j6heD4EjEEgAuPI'
@@ -15,7 +16,6 @@ function Table() {
       .then(rep => {
         // Remove additional text and extract only JSON:
         const jsonData = JSON.parse(rep.substring(47).slice(0, -2))
-        console.log('jsonData', jsonData)
         const headerArray = [
           jsonData.table.cols[1],
           jsonData.table.cols[2],
@@ -23,9 +23,24 @@ function Table() {
           jsonData.table.cols[4]
         ]
         setHeader(headerArray)
+        const bodyArray = [
+          ...getBodyRow(jsonData.table.rows, 0, 0),
+          ...getBodyRow(jsonData.table.rows, 1, 0),
+          ...getBodyRow(jsonData.table.rows, 2, 0),
+          ...getBodyRow(jsonData.table.rows, 3, 0),
+          ...getBodyRow(jsonData.table.rows, 4, 0),
+          ...getBodyRow(jsonData.table.rows, 5, 0),
+          ...getBodyRow(jsonData.table.rows, 6, 0),
+          ...getBodyRow(jsonData.table.rows, 7, 0),
+          ...getBodyRow(jsonData.table.rows, 8, 0),
+          ...getBodyRow(jsonData.table.rows, 9, 0),
+          ...getBodyRow(jsonData.table.rows, 10, 0),
+          ...getBodyRow(jsonData.table.rows, 11, 0),
+          ...getBodyRow(jsonData.table.rows, 12, 0)
+        ]
+        setBody(bodyArray)
       })
   }, [])
-  console.log('header', header)
   const headerJSX = () => (
     <tr>
       <th aria-label='name' />
@@ -35,39 +50,29 @@ function Table() {
       <th>{header[3]?.label || 'Pisteet'}</th>
     </tr>
   )
+
+  const bodyJSX = () => (
+    <>
+      {getBodyJSXRow(body, 0)}
+      {getBodyJSXRow(body, 5)}
+      {getBodyJSXRow(body, 10)}
+      {getBodyJSXRow(body, 15)}
+      {getBodyJSXRow(body, 20)}
+      {getBodyJSXRow(body, 25)}
+      {getBodyJSXRow(body, 30)}
+      {getBodyJSXRow(body, 35)}
+      {getBodyJSXRow(body, 40)}
+      {getBodyJSXRow(body, 45)}
+      {getBodyJSXRow(body, 50)}
+      {getBodyJSXRow(body, 55)}
+      {getBodyJSXRow(body, 60)}
+    </>
+  )
+
   return (
     <table className='table'>
       <thead>{headerJSX()}</thead>
-      <tbody>
-        <tr>
-          <td>Wurppe</td>
-          <td>28</td>
-          <td>1</td>
-          <td>28</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>Timo</td>
-          <td>26</td>
-          <td>1</td>
-          <td>26</td>
-          <td>18</td>
-        </tr>
-        <tr>
-          <td>Kimmo</td>
-          <td>27</td>
-          <td>0.75</td>
-          <td>20.25</td>
-          <td>12</td>
-        </tr>
-        <tr>
-          <td>Santeri</td>
-          <td>26</td>
-          <td>1</td>
-          <td>26</td>
-          <td>18</td>
-        </tr>
-      </tbody>
+      <tbody>{bodyJSX()}</tbody>
     </table>
   )
 }
