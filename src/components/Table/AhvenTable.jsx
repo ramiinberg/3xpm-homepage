@@ -29,7 +29,6 @@ const bodyJSX = body => (
 )
 
 function AhvenTable({ header, body }) {
-  console.log('header', header, 'body', body)
   return (
     <table className='table'>
       <thead>{headerJSX(header)}</thead>

@@ -10,7 +10,7 @@ function Table() {
   const query = encodeURIComponent('Select *')
   const url = `${base}&sheet=${sheetName}&tq=${query}`
   const [header, setHeader] = useState({})
-  const [body, setBody] = useState([])
+  const [body, setBody] = useState({})
 
   useEffect(() => {
     fetch(url)
@@ -18,7 +18,6 @@ function Table() {
       .then(rep => {
         // Remove additional text and extract only JSON:
         const jsonData = JSON.parse(rep.substring(47).slice(0, -2))
-        console.log('header', jsonData.table.cols)
         const ahvenHeader = []
         const kuhaHeader = []
         jsonData.table.cols.forEach(item => {
@@ -43,33 +42,47 @@ function Table() {
           ahvenHeader: [...ahvenHeader],
           kuhaHeader: [...kuhaHeader]
         }
-
-        console.log('headerArray', headerArray)
         setHeader(headerArray)
-        const bodyArray = [
-          ...getBodyRow(jsonData.table.rows, 0, 0),
-          ...getBodyRow(jsonData.table.rows, 1, 0),
-          ...getBodyRow(jsonData.table.rows, 2, 0),
-          ...getBodyRow(jsonData.table.rows, 3, 0),
-          ...getBodyRow(jsonData.table.rows, 4, 0),
-          ...getBodyRow(jsonData.table.rows, 5, 0),
-          ...getBodyRow(jsonData.table.rows, 6, 0),
-          ...getBodyRow(jsonData.table.rows, 7, 0),
-          ...getBodyRow(jsonData.table.rows, 8, 0),
-          ...getBodyRow(jsonData.table.rows, 9, 0),
-          ...getBodyRow(jsonData.table.rows, 10, 0),
-          ...getBodyRow(jsonData.table.rows, 11, 0),
-          ...getBodyRow(jsonData.table.rows, 12, 0)
-        ]
+        const bodyArray = {
+          ahvenBody: [
+            ...getBodyRow(jsonData.table.rows, 0, 0),
+            ...getBodyRow(jsonData.table.rows, 1, 0),
+            ...getBodyRow(jsonData.table.rows, 2, 0),
+            ...getBodyRow(jsonData.table.rows, 3, 0),
+            ...getBodyRow(jsonData.table.rows, 4, 0),
+            ...getBodyRow(jsonData.table.rows, 5, 0),
+            ...getBodyRow(jsonData.table.rows, 6, 0),
+            ...getBodyRow(jsonData.table.rows, 7, 0),
+            ...getBodyRow(jsonData.table.rows, 8, 0),
+            ...getBodyRow(jsonData.table.rows, 9, 0),
+            ...getBodyRow(jsonData.table.rows, 10, 0),
+            ...getBodyRow(jsonData.table.rows, 11, 0),
+            ...getBodyRow(jsonData.table.rows, 12, 0)
+          ],
+          kuhaBody: [
+            ...getBodyRow(jsonData.table.rows, 0, 6),
+            ...getBodyRow(jsonData.table.rows, 1, 6),
+            ...getBodyRow(jsonData.table.rows, 2, 6),
+            ...getBodyRow(jsonData.table.rows, 3, 6),
+            ...getBodyRow(jsonData.table.rows, 4, 6),
+            ...getBodyRow(jsonData.table.rows, 5, 6),
+            ...getBodyRow(jsonData.table.rows, 6, 6),
+            ...getBodyRow(jsonData.table.rows, 7, 6),
+            ...getBodyRow(jsonData.table.rows, 8, 6),
+            ...getBodyRow(jsonData.table.rows, 9, 6),
+            ...getBodyRow(jsonData.table.rows, 10, 6),
+            ...getBodyRow(jsonData.table.rows, 11, 6),
+            ...getBodyRow(jsonData.table.rows, 12, 6)
+          ]
+        }
         setBody(bodyArray)
       })
   }, [])
-  console.log('headerArray', header)
   return (
     Object.keys(header).length && (
       <>
-        <AhvenTable header={header.ahvenHeader} body={body} />
-        <KuhaTable header={header.kuhaHeader} body={body} />
+        <AhvenTable header={header.ahvenHeader} body={body.ahvenBody} />
+        <KuhaTable header={header.kuhaHeader} body={body.kuhaBody} />
       </>
     )
   )
