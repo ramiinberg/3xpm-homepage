@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import AhvenTable from './AhvenTable'
+import KuhaTable from './KuhaTable'
 import { getBodyRow } from './tableFunctions'
 
 function Table() {
@@ -8,7 +9,7 @@ function Table() {
   const sheetName = 'Kilpailu'
   const query = encodeURIComponent('Select *')
   const url = `${base}&sheet=${sheetName}&tq=${query}`
-  const [header, setHeader] = useState([])
+  const [header, setHeader] = useState({})
   const [body, setBody] = useState([])
 
   useEffect(() => {
@@ -17,12 +18,33 @@ function Table() {
       .then(rep => {
         // Remove additional text and extract only JSON:
         const jsonData = JSON.parse(rep.substring(47).slice(0, -2))
-        const headerArray = [
-          jsonData.table.cols[1],
-          jsonData.table.cols[2],
-          jsonData.table.cols[3],
-          jsonData.table.cols[4]
-        ]
+        console.log('header', jsonData.table.cols)
+        const ahvenHeader = []
+        const kuhaHeader = []
+        jsonData.table.cols.forEach(item => {
+          // Ahven
+          if (
+            item.id === 'B' ||
+            item.id === 'C' ||
+            item.id === 'D' ||
+            item.id === 'E'
+          ) {
+            ahvenHeader.push(item)
+          } else if (
+            item.id === 'H' ||
+            item.id === 'I' ||
+            item.id === 'J' ||
+            item.id === 'K'
+          ) {
+            kuhaHeader.push(item)
+          }
+        })
+        const headerArray = {
+          ahvenHeader: [...ahvenHeader],
+          kuhaHeader: [...kuhaHeader]
+        }
+
+        console.log('headerArray', headerArray)
         setHeader(headerArray)
         const bodyArray = [
           ...getBodyRow(jsonData.table.rows, 0, 0),
@@ -42,8 +64,15 @@ function Table() {
         setBody(bodyArray)
       })
   }, [])
-
-  return <AhvenTable header={header} body={body} />
+  console.log('headerArray', header)
+  return (
+    Object.keys(header).length && (
+      <>
+        <AhvenTable header={header.ahvenHeader} body={body} />
+        <KuhaTable header={header.kuhaHeader} body={body} />
+      </>
+    )
+  )
 }
 
 export default Table
