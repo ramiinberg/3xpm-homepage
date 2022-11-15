@@ -28,8 +28,7 @@ const bodyJSX = body => (
   </>
 )
 
-function AhvenTable({ header, body }) {
-  console.log('header', header, 'body', body)
+function KuhaTable({ header, body }) {
   return (
     <table className='table'>
       <thead>{headerJSX(header)}</thead>
@@ -38,4 +37,4 @@ function AhvenTable({ header, body }) {
   )
 }
 
-export default AhvenTable
+export default KuhaTable
