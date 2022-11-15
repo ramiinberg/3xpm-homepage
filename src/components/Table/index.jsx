@@ -1,4 +1,4 @@
-import Table from './Table'
 import './table.scss'
+import TableContainer from './TableContainer'
 
-export default Table
+export default TableContainer
